@@ -14,7 +14,11 @@ switch ($method) {
         $controller->create();
         break;
     case 'GET':
-        $controller->list();
+        if (isset($_GET['id'])) {
+            $controller->getById($_GET['id']);
+        } else {
+            $controller->list();
+        }
         break;
     case 'PUT':
         $controller->update();

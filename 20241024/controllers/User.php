@@ -35,6 +35,27 @@ class UserController
         }
     }
 
+    public function getById($id)
+    {
+        if (isset($id)) {
+            try {
+                $user = $this->user->getById($id);
+                if ($user) {
+                    echo json_encode($user);
+                } else {
+                    http_response_code(404);
+                    echo json_encode(["message" => "Usuário não encontrado."]);
+                }
+            } catch (\Throwable $th) {
+                http_response_code(500);
+                echo json_encode(["message" => "Erro ao buscar o usuário."]);
+            }
+        } else {
+            http_response_code(400);
+            echo json_encode(["message" => "Dados incompletos."]);
+        }
+    }
+
     public function update()
     {
         $data = json_decode(file_get_contents("php://input"));
